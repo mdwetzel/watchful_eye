@@ -1,6 +1,9 @@
-<h1><%= @status %></h1>
+<div id="search-box">
+	<form action="/" method="post">
+		<input type="text" name="url" id="url" placeholder="site" autofocus>
+		<br>
+		<input type="submit" value="check">
+	</form>	
+</div>
 
-<form action="/" method="POST">
-	<input type="text" name="url" id="url" placeholder="Website">
-	<input type="submit">
-</form>
+<h2 id="status"><%= @status %></h2>

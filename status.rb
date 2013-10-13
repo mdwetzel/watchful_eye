@@ -8,18 +8,27 @@ end
 post '/' do
   unless params[:url].empty?
     url = params[:url]
-    unless url =~ /^http:\/\//
-      url = "http://#{url}"
-    end
     
-    res = Net::HTTP.get_response(URI.parse(url))
-  
-    if res.code =~ /2|3\d{2}/
-      @status = "#{url} seems to be working okay."
-    else
-      @status = "#{url} appears to be down!"  
+    if up? url
+      @status = "<span class='up'>It's up!</span>"
+    else 
+      @status = "<span class='down'>It's down!</span>"   
     end
   end
   
   erb :home
+end
+
+def up?(url)
+  unless url =~ /^http:\/\//
+    url = "http://#{url}"
+  end
+  
+  res = Net::HTTP.get_response(URI.parse(url))
+
+  if res.code =~ /2|3\d{2}/
+    true
+  else
+    false
+  end
 end
